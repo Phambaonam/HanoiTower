@@ -1,0 +1,23 @@
+{
+  "name": "thap-ha-noi",
+  "version": "1.0.0",
+  "description": "using algorithm to slove hanoi tower problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -S"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Phambaonam/HanoiTower.git"
+  },
+  "keywords": [
+    "node.js",
+    "algorithm"
+  ],
+  "author": "Doremon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Phambaonam/HanoiTower/issues"
+  },
+  "homepage": "https://github.com/Phambaonam/HanoiTower#readme"
+}
