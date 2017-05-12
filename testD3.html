@@ -1,0 +1,49 @@
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+</body>
+
+<script>
+
+    /* add dom element */
+
+    d3.select('body')
+        .append('h1')
+        .text('HELLO')
+        .style('color', 'gold')
+
+    d3.select('body')
+        .append('svg') // add element
+        .attr('with', 50) //  add attribute
+        .attr('height', 50)
+        .append('circle')
+        .attr('cx', 25)
+        .attr('cy', 25)
+        .attr('r', 25)
+        .style('fill', 'green') // add style css
+
+    //  Cách viết dễ hiểu
+    let bodySelection = d3.select('body')
+    let svgSelection = bodySelection
+        .append('svg')
+        .attr('with', 50)
+        .attr('height', 50)
+    let circleSelection = svgSelection
+        .append('circle')
+        .attr('cx', 25)
+        .attr('cy', 25)
+        .attr('r', 25)
+        .style('fill', 'red')
+
+    /* Binding data */
+
+    let data = [1, 2, 3] // data can be number, object
+    let bindingData = d3.select('body').selectAll('p')
+        .data(data) //append  p vào mỗi element của data sau khi
+        .enter()
+        .append('p')
+        .text('hi')
+
+</script>
