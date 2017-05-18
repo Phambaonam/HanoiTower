@@ -9,7 +9,7 @@ class Disk {
         this.name = name
     }
 
-    disk() {
+    draw() {
         return this.name
     }
 }
