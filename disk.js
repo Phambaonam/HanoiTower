@@ -5,12 +5,12 @@
  * returns list disks which  we had
  */
 class Disk {
-    constructor(diameter) {
-        this.diameter = diameter
+    constructor(name) {
+        this.name = name
     }
 
     disk() {
-        return this.diameter
+        return this.name
     }
 }
 module.exports = Disk
