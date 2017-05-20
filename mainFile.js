@@ -17,12 +17,12 @@ const disk = {
 }
 const distancePiles = piles.widthThicks + margin
 const cySvg = 100
-
+const checkNumber = Number
 
 /* class Piles */
 class Pile {
-    constructor(pile) {
-        this.pile = pile
+    constructor(namePile) {
+        this.pile = namePile
     }
 
     drawPile(myDisks) {
@@ -46,23 +46,24 @@ class Pile {
 class Disk {
     constructor(nameDisk, signDisk) {
         this.nameDisk = nameDisk
-        this.first_x = 0
-        this.first_y = signDisk * disk.heightDisks
+        this.signDisk = signDisk
+        this.first_x = 0 // tọa độ của đĩa khi không có cột
+        this.first_y = signDisk * disk.heightDisks // tọa độ của đĩa khi không có cột
         this.height = signDisk * disk.heightDisks + disk.heightDisks * 2
     }
 
-    drawDisk(totalDisks, signDisk) {
-        let cx = margin + signDisk * disk.heightDisks / 2
-        let cy = (totalDisks - signDisk) * disk.heightDisks + disk.heightDisks + cySvg
-        let width = piles.widthThicks - 2 * signDisk * disk.heightDisks / 2
+    drawDisk(totalDisks) {
+        let cx = margin + this.signDisk * disk.heightDisks / 2
+        let cy = (totalDisks - this.signDisk) * disk.heightDisks + disk.heightDisks + cySvg
+        let width = piles.widthThicks - 2 * this.signDisk * disk.heightDisks / 2
         const myClass = ' color'
         // d3.selectAll('svg > *').remove()
         svg.append("rect")
-            .attr("x", cx) // Toa do x cua floor
-            .attr("y", cy) // Toa do y cua floor
+            .attr("x", cx) // tọa độ của đĩa khi  có cột
+            .attr("y", cy) // tọa độ của đĩa khi  có cột
             .attr("width", width) // Chieu rong cua floor
-            .attr("height", disk.heightDisks)
-            .classed('disk' + signDisk + myClass, true) // Chieu cao cua floor
+            .attr("height", disk.heightDisks) // Chieu cao cua floor
+            .classed('disk' + this.signDisk + myClass, true)  // dùng class selector để di chuyển đúng đĩa
             .style("fill", function () {
                 return "hsl(" + Math.random() * 360 + ",100%,60%)";
             });
@@ -108,21 +109,19 @@ class GameEngine {
         toTower.arrDisk.unshift(nameDisk);
     }
 
-    move(totalDisks, towerA, towerB, towerC) {
+    returnData(totalDisks, towerA, towerB, towerC) {
         if (totalDisks > 0) {
-            this.move(totalDisks - 1, towerA, towerC, towerB)
+            this.returnData(totalDisks - 1, towerA, towerC, towerB)
             // console.log("Move " + nameDisks[totalDisks - 1] + " from " + towerA + " to " + towerC)
-            console.log(`Move disk ${totalDisks} from ${towerA.nameTower} to ${towerC.nameTower}`)
+            // console.log(`Move disk ${totalDisks} from ${towerA.nameTower} to ${towerC.nameTower}`)
             this.data.push([arrDisks[totalDisks - 1], towerA, towerC])
-            this.move(totalDisks - 1, towerB, towerA, towerC)
+            this.returnData(totalDisks - 1, towerB, towerA, towerC)
             this.count++
         }
         return this.data
     }
 
-
     /* draw new disk*/
-
     drawNewDisk(data, totalDisks) {
         for (let i = 0; i < data.length; i++) {
             let x = this.getDistance(data[i][1].nameTower, data[i][2].nameTower)
@@ -147,52 +146,43 @@ class GameEngine {
     }
 }
 
-
 let arrDisks = []
-
-// let nameDisks = arrDisks
-
-let arrTowers = [
+const arrTowers = [
     new Tower('towerA', arrDisks).tower(),
     new Tower('towerB', []).tower(),
     new Tower('towerC', []).tower()
 ]
 
-
 /* Run application*/
 create = () => {
-
-    const checkNumber = Number;
     const totalDisks = checkNumber($("#myDisks").val())
     if (totalDisks > 0) {
-        let count = totalDisks
         /* draw piles*/
         for (let pile = 1; pile <= totalPiles; pile++) {
             const myPiles = new Pile(pile)
             myPiles.drawPile(totalDisks)
         }
         /* draw disks*/
+        let count = totalDisks
         for (let signDisk = 1; signDisk <= totalDisks; signDisk++) {
             arrDisks.push(new Disk('disk' + count, signDisk))
-            const myDisk = new Disk()
-            myDisk.drawDisk(totalDisks, signDisk)
+            const myDisk = new Disk(null, signDisk)
+            myDisk.drawDisk(totalDisks)
             count--
         }
+        // const result = new GameEngine()
+        // const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
+        // console.log('data of disks before move disk ', data);
     } else {
         alert('Input invalid !')
     }
 };
 
 run = () => {
-    const checkNumber = Number;
     const totalDisks = checkNumber($("#myDisks").val())
     const result = new GameEngine()
-    let data = result.move(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
-    console.log('data', data);
-    // const totalDisks = arrDisks.length
+    const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
     result.drawNewDisk(data, totalDisks)
-    // console.log('nameDisks', nameDisks);
-    console.log('arrDisks', arrDisks);
+    // console.log('data of disks after move disk ', data);
     console.log('Total step: ', result.count);
-
 }
