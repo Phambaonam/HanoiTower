@@ -48,7 +48,7 @@
    * Vẽ đế : margin-left = margin-right = khoảng cách giữa các đế = margin
    * Vẽ cọc: khoảng cách cọc sẽ = số đĩa * chiều cao đĩa + chiều cao đĩa
 
-    ![fly](images/drawPiles.png)
+    ![drawPiles](images/drawPiles.png)
 
 ### Lập trình theo hướng đối tượng:
    * Hướng đối tượng là  bản thân của mỗi chủ thể (đối tượng) phải có đầy đủ thông tin, hành động cụ thể để miêu tả rõ bản thân chủ thể đó.
