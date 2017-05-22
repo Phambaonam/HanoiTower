@@ -41,7 +41,6 @@ class Pile {
             .style("fill", '#333030')
     }
 }
-
 /* class Disk*/
 class Disk {
     constructor(nameDisk, signDisk) {
@@ -121,8 +120,8 @@ class GameEngine {
         return this.data
     }
 
-    /* draw new disk*/
-    drawNewDisk(data, totalDisks) {
+    /* move disk*/
+    moveDisk(data, totalDisks) {
         for (let i = 0; i < data.length; i++) {
             let x = this.getDistance(data[i][1].nameTower, data[i][2].nameTower)
             let begin_y = data[i][0].first_y
@@ -166,13 +165,15 @@ create = () => {
         let count = totalDisks
         for (let signDisk = 1; signDisk <= totalDisks; signDisk++) {
             arrDisks.push(new Disk('disk' + count, signDisk))
-            const myDisk = new Disk(null, signDisk)
+            let myDisk = new Disk(null, signDisk)
             myDisk.drawDisk(totalDisks)
             count--
         }
-        // const result = new GameEngine()
-        // const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
-        // console.log('data of disks before move disk ', data);
+        /*
+         const result = new GameEngine()
+         const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
+         console.log('data of disks before move disk ', data);
+         */
     } else {
         alert('Input invalid !')
     }
@@ -182,7 +183,9 @@ run = () => {
     const totalDisks = checkNumber($("#myDisks").val())
     const result = new GameEngine()
     const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
-    result.drawNewDisk(data, totalDisks)
-    // console.log('data of disks after move disk ', data);
-    console.log('Total step: ', result.count);
+    result.moveDisk(data, totalDisks)
+    /*
+     console.log('data of disks after move disk ', data);
+     console.log('Total step: ', result.count);
+     */
 }
