@@ -17,18 +17,45 @@
 4. chuyển đĩa 3 sang cọc C
 5. lặp lại 3 bước trên để chuyển 1 & 2 cho nằm lên 3.
 
-![Image of Ha Noi Tower](Tower_of_Hanoi.gif)
+![Image of Ha Noi Tower](images/Tower_of_Hanoi.gif)
 
 ### Cách tiếp cận bài toán:
    * Ta vẽ lần lượt các cột, các đĩa bằng d3js bằng cách tính toán tọa độ, tham khảo [jsfiddle.net](https://jsfiddle.net/nampb/tdebswnu/49/)
-   * Bản chất của việc di chuyển đĩa là thay đổi tọa độ(x, y) của đĩa, trong d3js cung cấp 1 attribute ```transform="translate(new_x,new_y)"``` để làm việc này, đọc thêm [tại đây](https://www.dashingd3js.com/svg-group-element-and-d3js), xem [ví dụ](https://jsfiddle.net/nampb/j47xg0w3/13/)
-   * Mỗi đĩa rời khỏi tháp cũ sẽ phải bay lên 1 khoảng dy  và đáp xuống tháp mới 1 khoảng dy'
-   * Chúng ta thấy tọa độ mới (new_x, new_y) của các đĩa khi di chuyển giữa các tháp sẽ phụ thuộc vào khoảng cách giữa các tháp (dx) và dy' phía trên [ví dụ](https://jsfiddle.net/nampb/jceuu4dz/1/)
+   * Bản chất của việc di chuyển đĩa là thay đổi tọa độ(x, y) của đĩa, trong d3js cung cấp 1 attribute ```transform="translate(new_x,new_y)"``` để làm việc này, đọc thêm [tại đây](https://www.dashingd3js.com/svg-group-element-and-d3js), xem [ví dụ này](https://jsfiddle.net/nampb/j47xg0w3/13/)
+   * Mỗi đĩa rời khỏi tháp cũ sẽ phải bay lên 1 khoảng dy  và đáp xuống tháp mới 1 khoảng dy', sao cho đĩa phải đặt trên đáy hoặc bên trên 1 đĩa khác.
+   * Chúng ta thấy tọa độ mới (new_x, new_y) của 1 đĩa khi di chuyển giữa các tháp sẽ phụ thuộc vào khoảng cách giữa các tháp (dx) và dy' phía trên,xem [ví dụ này](https://jsfiddle.net/nampb/jceuu4dz/3/).
+
+       ![fly](images/kc.png)
+   * Như vậy khi ta có 1 mảng data chứa đầy đủ thông tin thì bài toán đã được giải quyết
+
+### Thông số để vẽ cột và đĩa:
+```javascript
+    const margin = 120
+    const piles = {
+        widthPiles: 10, // chiều rộng của cột
+        heightPiles: 40, // chiều cao của cột
+        widthThicks: ($('.disks').width() - 4 * margin) / 3, // chiều rộng của đế
+        heightThicks: 20 // chiều cao của đế
+    }
+
+    const disk = {
+        heightDisks: 40 // chiều cao của đĩa
+    }
+    const distancePiles = piles.widthThicks + margin // khoảng cách giữa các cột
+    const cySvg = 100 //thẻ svg có 1 khoảng margin-top
+```
+### Cách vẽ cột và đĩa:
+   * Vẽ đế : margin-left = margin-right = khoảng cách giữa các đế = margin
+   * Vẽ cọc: khoảng cách cọc sẽ = số đĩa * chiều cao đĩa + chiều cao đĩa
+
+    ![fly](images/drawPiles.png)
+
 ### Lập trình theo hướng đối tượng:
    * Hướng đối tượng là  bản thân của mỗi chủ thể (đối tượng) phải có đầy đủ thông tin, hành động cụ thể để miêu tả rõ bản thân chủ thể đó.
    * Đối tượng cọc: tên cọc, hàm vẽ cọc.
    * Đối tượng đĩa: tên đĩa, hàm vẽ đĩa.
    * Đối tượng amination - miêu tả các bước di chuyển đĩa:  hàm trả về dữ liệu các bước di chuyển và hàm di chuyển đĩa.
+   * Từ cách tiếp cận bài toán ta xây dựng được các class sau:
 1. Class vẽ cọc
 ```javascript
     class Pile {
@@ -55,7 +82,6 @@
         }
     }
 ```
-
 3. Class tower
 
  ```javascript
@@ -102,8 +128,12 @@
         }
 
         /* move disk*/
-        moveDisk(data, totalDisks) {
+        moveDisk(data, totalDisks) { // data sau khi được trả về sẽ được amination bằng hàm này
             // code here
         }
     }
 ```
+
+### Nguồn tham khảo:
+* Thuật toán [tháp hà nội](https://rosettacode.org/wiki/Towers_of_Hanoi#JavaScript).
+* Learn D3js: [dashingd3js.com](https://www.dashingd3js.com/table-of-contents), [d3js.org](https://d3js.org/)

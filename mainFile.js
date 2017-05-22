@@ -140,6 +140,7 @@ class GameEngine {
                 .attr("transform", 'translate(' + new_x + ',' + height + ')')
                 .transition()
                 .attr('transform', 'translate(' + new_x + ',' + new_y + ')')
+                .delay(10000)
             data[i][0].first_x += x
         }
     }
@@ -162,13 +163,13 @@ create = () => {
             myPiles.drawPile(totalDisks)
         }
         /* draw disks*/
-        let count = totalDisks
-        for (let signDisk = 1; signDisk <= totalDisks; signDisk++) {
-            arrDisks.push(new Disk('disk' + count, signDisk))
-            let myDisk = new Disk(null, signDisk)
-            myDisk.drawDisk(totalDisks)
-            count--
-        }
+        // let count = totalDisks
+        // for (let signDisk = 1; signDisk <= totalDisks; signDisk++) {
+        //     arrDisks.push(new Disk('disk' + count, signDisk))
+        //     let myDisk = new Disk(null, signDisk)
+        //     myDisk.drawDisk(totalDisks)
+        //     count--
+        // }
         /*
          const result = new GameEngine()
          const data = result.returnData(arrDisks.length, arrTowers[0], arrTowers[1], arrTowers[2])
