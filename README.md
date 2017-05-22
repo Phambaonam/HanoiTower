@@ -46,7 +46,8 @@
 ```
 ### Cách vẽ cột và đĩa:
    * Vẽ đế : margin-left = margin-right = khoảng cách giữa các đế = margin
-   * Vẽ cọc: khoảng cách cọc sẽ = số đĩa * chiều cao đĩa + chiều cao đĩa
+   * Vẽ cọc: khoảng cách cọc  = số đĩa * chiều cao đĩa + chiều cao đĩa.
+   * Vẽ đĩa: từ tọa độ của đế suy ra tọa độ của đĩa với các thông số trên.
         ![drawPiles](images/pile.png)
 
 ### Lập trình theo hướng đối tượng:
