@@ -140,7 +140,6 @@ class GameEngine {
                 .attr("transform", 'translate(' + new_x + ',' + height + ')')
                 .transition()
                 .attr('transform', 'translate(' + new_x + ',' + new_y + ')')
-                .delay(10000)
             data[i][0].first_x += x
         }
     }
